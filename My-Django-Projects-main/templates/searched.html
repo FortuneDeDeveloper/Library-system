@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <center>
+        {% if searched %}
+
+        <div class="container">
+            <form action="{% url 'searched' %}" method="post" class="form-container">
+                {% csrf_token %}
+                <div>
+                    <input type="search" placeholder="Search for books" name="searched" class="searchbar">
+                </div>
+                <div>
+                    <button class="#" type="submit">search</button>
+                </div>
+            </form>
+       
+    
+        <nav class="navbar">
+            <div class="nav_links">
+                     <ul>
+                        <li><a href="{% url 'shelf' %}"><i class="fa-solid fa-book"></i></a></li>
+                        <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
+                        <li><a href="#"><i class="fa fa-user"></i></a></li>
+                    </ul>
+                    <span class="hello">{{request.user}}</span>
+            <div>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">logout</button></a>
+                </form>
+                
+            </div>
+            </div>
+        </nav>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: blue;">{{message}}</p>
+        {% endfor %}
+    {% endif %}
+            <div class="wrapper">
+                <h2><strong>You searched for {{searched}}<span></span></strong></h2>
+                <div class="cards">
+                    {% for book in books %}
+                    <figure class="card">
+                        <img src="{{book.cover.url}}" />
+                        <figcaption id="bookTitle">{{book.title}}</figcaption>
+                        <figcaption><a href="{% url 'borrow-book' %}"><button>Borrow</button></a></figcaption>
+                    </figure>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <h1>You are not authorized to view this page</h1>
+        {% endif %}
+    </center>
+{% endblock %}
+</body>
+</html>
+    

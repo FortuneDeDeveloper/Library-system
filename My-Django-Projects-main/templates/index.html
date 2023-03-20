@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'mysite/styles.css' %}">
+    <script src="https://kit.fontawesome.com/d6e4e97a00.js" crossorigin="anonymous"></script>
+    <title>Home Page</title>
+</head>
+<body>
+    <header class="header">
+        <h1>The Knowledge Archive</h1>
+    </header>
+<center>
+    <div class="container">
+        <form action="{% url 'searched' %}" method="post" class="form-container">
+            {% csrf_token %}
+            <div>
+                <input type="search" placeholder="Search for books" name="searched" class="searchbar">
+            </div>
+            <div>
+                <button class="#" type="submit">search</button>
+            </div>
+        </form>
+   
+    <nav class="navbar">
+        <div class="nav_links">
+                 <ul>
+                    <li><a href="{% url 'shelf' %}"><i class="fa-solid fa-book"></i></a></li>
+                    <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
+                    <li><a href="#"><i class="fa fa-user"></i></a></li>
+                </ul>
+                <span class="hello">{{request.user}}</span>
+        <div>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">logout</button></a>
+            </form>
+            
+        </div>
+        </div>
+    </nav>
+</div>
+    <div class="wrapper">
+        <h2><strong> {{num_books}} Recently Added</strong></h2>
+        <h3 style="color: blue;">{{num_authors}} Authors</h3>
+        <div class="cards">
+            {% for Book in Books %}
+            <figure class="card">
+                <img src="{{Book.cover.url}}" />
+                <figcaption id="bookTitle">{{Book.title}}</figcaption>
+                <figcaption><a href="{% url 'borrow-book' %}"><button>Borrow</button></a></figcaption>
+            </figure>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="{% static 'nav.js' %}"></script>
+</center>
+</body>
+</html>

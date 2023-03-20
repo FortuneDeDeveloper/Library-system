@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<center>
+<nav class="navbar">
+    <div class="nav_links" id="shelf-nav">
+             <ul>
+                <li><a href="{% url 'home' %}"><i class="fa fa-home"></i></a></li>
+                <li><a href="#"><i class="fa fa-user"></i></a></li>
+            </ul>
+            <span class="hello">{{request.user}}</span>
+    <div>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">logout</button></a>
+        </form>
+        
+    </div>
+    </div>
+</nav>
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: blue;">{{message}}</p>
+        {% endfor %}
+    {% endif %}
+<div class="wrapper" style="align-items: center;">
+    <h2><strong> {{num_borrowed_books}} Borrowed books</strong></h2>
+    {% if Bookinstance_list %}
+        <div class="cards">
+            {% for bookinst in Bookinstance_list %}
+            <li style="list-style: none;">
+                <figure class="card">
+                    <img src="{{bookinst.book.cover.url}}" />
+                    <figcaption>{{bookinst.book.title}}</figcaption>
+                </figure>
+                {% if bookinst.is_overdue %}
+                    <p style="color:red;">({{bookinst.due_back}})<p>
+                {% else %}
+                    <p style="color:blue;">({{bookinst.due_back}})<p>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h3>No borrowed books yet</h3>
+    {% endif %}
+</div>
+</center>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'mysite/style.css' %}">
+    <title>signIn/SignUp</title>
+</head>
+<body>
+    <div class="container right-panel-active">
+        <!-- Sign In -->
+        <div class="container__form container--signin">
+            <form action="" class="form" id="form1" method="post">
+                {% csrf_token %}
+                <h2 class="form__title">Sign Up</h2>
+                {{form.username}}
+                {{form.email}}
+                {{form.password1}}
+                {{form.password2}}
+                {{form.student_number}}
+                {% for field, error in form.errors.items %}
+                <div>
+                    <p style="color: #ff0000;">{{ error|striptags }}</p>
+                </div>
+                {% endfor %}
+                <button class="btn" type="submit">Sign Up</button>
+                <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+            </form>
+        </div>
+
+        <!-- Overlay -->
+        <div class="container__overlay">
+            <div class="overlay">
+                <!--<div class="overlay__panel overlay--left">
+                    <button class="btn" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay__panel overlay--right">
+                    <button class="btn" id="signUp">Sign Up</button>
+                </div>-->
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'script.js' %}"></script>
+</body>
+</html>

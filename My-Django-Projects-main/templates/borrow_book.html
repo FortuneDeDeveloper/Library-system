@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <p style="color: blue; font-size: 2rem; text-align:center;">{{message}}</p>
+    {% endfor %}
+    {% endif %}
+
+<div class="container-field">
+    <form action="{% url 'borrow-book' %}" method="post" class="form" id="form1">
+        <h2 class="form__title">Borrow book</h2>
+        {% csrf_token %}
+        <label style="display: inline; font-size: 30px;">Book name</label>{{form.book}}<br>
+        {{form.due_back}}<br>
+        <p style="display: inline; font-size: 30px;">Borrower</p>{{form.borrower}}<br>
+        <button type="submit">Borrow</button>
+    </form>
+</div>
+{% endblock %}
